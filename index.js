@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 4001;
 
+app.use(express.static('public'));
+
 // Checks if parameter is a valid date
 app.param('date', (req, res, next, date) => {
     const reqDate = new Date(date);
@@ -14,6 +16,10 @@ app.param('date', (req, res, next, date) => {
       req.date = reqDate;
       next();
     }
+});
+
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 // An empty date parameter gets the current time
